@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">GadsPracticeProject</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tab_learning_leaders">Learning Leaders</string>
+    <string name="tab_skilliq_leaders">Skill IQ Leaders</string>
+    <string name="project_submission">Project Submission</string>
+    <string name="button_submit2">Submit</string>
+    <string name="email">Email</string>
+    <string name="project_on_github_link">Project on GitHub(link)</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="are_you_sure">Are You Sure?</string>
+</resources>

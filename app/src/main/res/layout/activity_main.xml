@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/background_dark"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/textView_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-black"
+            android:text="LeaderBoard"
+            android:textAllCaps="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/submit_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:background="@drawable/submit_button_shape"
+            android:onClick="openPostActivity"
+            android:text="Submit"
+            android:textColor="#0C0C0C"
+            android:textSize="15dp" />
+
+
+    </LinearLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linear_layout"
+        android:background="@android:color/background_dark"
+        app:tabIndicatorColor="@color/cardview_light_background"
+        app:tabSelectedTextColor="@color/cardview_light_background"
+        app:tabTextColor="@color/ash">
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tabLayout" />
+</RelativeLayout>

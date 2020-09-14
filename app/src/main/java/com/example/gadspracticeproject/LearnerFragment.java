@@ -7,11 +7,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -25,6 +27,8 @@ public class LearnerFragment extends Fragment {
 
     private static final String TAG = "LearnerFragment";
     private ProgressDialog progressDialog;
+    private Button refresh;
+    private SwipeRefreshLayout swipeToRefresh;
 
     public LearnerFragment() {
         // Required empty public constructor
@@ -33,10 +37,17 @@ public class LearnerFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        swipeToRefresh = getActivity().findViewById(R.id.swipe_refresh);
 
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Loading");
         progressDialog.show();
+
+        getDataFromApi();
+
+    }
+
+    private void getDataFromApi() {
         RetrofitInterface connect = LearnerRetrofitInstance.getRetrofitInstance().create(RetrofitInterface.class);
         Call<List<Model>> call = connect.getLearners();
         call.enqueue(new Callback<List<Model>>() {
@@ -50,12 +61,13 @@ public class LearnerFragment extends Fragment {
             @Override
             public void onFailure(Call<List<Model>> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(getActivity(), "No Internet", Toast.LENGTH_LONG).show();
+                refresh();
+                Toast.makeText(getActivity(), "Turn on Network\nSwipe Down To Refresh", Toast.LENGTH_LONG).show();
 
             }
         });
-
     }
+
 
     private void generateLearners(List<Model> body) {
         RecyclerView rvLearners = getView().findViewById(R.id.rv_learners);
@@ -71,4 +83,35 @@ public class LearnerFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_learner, container, false);
     }
+
+    private void refresh() {
+        swipeToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeToRefresh.setRefreshing(true);
+                refreshDataFromAPi();
+            }
+        });
+    }
+
+    private void refreshDataFromAPi() {
+        RetrofitInterface connect = LearnerRetrofitInstance.getRetrofitInstance().create(RetrofitInterface.class);
+        Call<List<Model>> call = connect.getLearners();
+        call.enqueue(new Callback<List<Model>>() {
+            @Override
+            public void onResponse(Call<List<Model>> call, Response<List<Model>> response) {
+                progressDialog.dismiss();
+                Log.d("TAG", "checkConnecting");
+                generateLearners(response.body());
+                swipeToRefresh.setRefreshing(false);
+            }
+
+            @Override
+            public void onFailure(Call<List<Model>> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(getActivity(), "No Internet\n Swipe to Refresh", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
 }

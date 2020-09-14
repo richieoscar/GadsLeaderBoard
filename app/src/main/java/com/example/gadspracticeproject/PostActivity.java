@@ -1,8 +1,11 @@
 package com.example.gadspracticeproject;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NavUtils;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,6 +40,8 @@ public class PostActivity extends AppCompatActivity {
     private String emailAddress;
     private String gitHubLink;
 
+    private  static final  String PARENT_EXTRA_NAME = "com/example/gadspracticeproject/MainActivity.class";
+    private  static final  String PACKAGE_EXTRA_NAME = "com/example/gadspracticeprojec";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +75,29 @@ public class PostActivity extends AppCompatActivity {
                 showAlert();
             }
         });
+
+    }
+
+//    @Nullable
+//    @Override
+////   // public Intent getSupportParentActivityIntent() {
+////        Intent parentIntent = getIntent();
+//        String className = parentIntent.getStringExtra(PARENT_EXTRA_NAME);
+//        Intent newIntent = null;
+//        try {
+//            newIntent = new Intent(this, Class.forName(PACKAGE_EXTRA_NAME +className));
+//        }catch (ClassNotFoundException e){
+//            e.printStackTrace();
+//        }
+//        return newIntent;
+//    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+       goBackHome();
+        //finish();
     }
 
     private void sendPost() {
@@ -83,7 +112,7 @@ public class PostActivity extends AppCompatActivity {
                // showAlert();
                 showSuccesAlert();
                 //handler takes two parameters
-                new Handler().postDelayed(()->{ goBackHome(); }, 5000);
+                new Handler().postDelayed(()->{ goBackHome(); finish();}, 5000);
 
             }
             @Override
@@ -118,8 +147,8 @@ public class PostActivity extends AppCompatActivity {
         Button yesButton =   view.findViewById(R.id.yes_button);
 
         //Used Langa in java 8
-        yesButton.setOnClickListener((v)-> sendPost());
-        close.setOnClickListener((v)-> finish());
+        yesButton.setOnClickListener((v)->sendPost());
+        close.setOnClickListener((v)-> {goBackHome();finish();});
 
         builder.show();
     }

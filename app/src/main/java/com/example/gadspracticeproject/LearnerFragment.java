@@ -109,7 +109,8 @@ public class LearnerFragment extends Fragment {
             @Override
             public void onFailure(Call<List<Model>> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(getActivity(), "No Internet\n Swipe to Refresh", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Turn on Network\n Swipe to Refresh", Toast.LENGTH_LONG).show();
+                swipeToRefresh.setRefreshing(false);
             }
         });
     }

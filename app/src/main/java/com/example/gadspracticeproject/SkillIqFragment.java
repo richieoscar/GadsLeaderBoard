@@ -44,6 +44,7 @@ public class SkillIqFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Model>> call, Response<List<Model>> response) {
                 generateSkillIqLearners(response.body());
+                refresh();
             }
 
             @Override

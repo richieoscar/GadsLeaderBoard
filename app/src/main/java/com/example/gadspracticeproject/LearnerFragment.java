@@ -56,6 +56,7 @@ public class LearnerFragment extends Fragment {
                 progressDialog.dismiss();
                 Log.d("TAG", "checkConnecting");
                 generateLearners(response.body());
+                refresh();
             }
 
             @Override
